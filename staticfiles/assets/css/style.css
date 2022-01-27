@@ -1,0 +1,14 @@
+.categories{opacity:0; transition: all 0.4s;  display:none; position:absolute;  background-color:white;  z-index:1; padding:6.5px 5px; box-shadow:-5px 10px 30px -10px #c1c1c1; border-radius:10px;}
+
+.caregory_items{cursor: pointer;  margin-bottom:5px; transition: all 0.5s;  width:100%; padding:4.3px 8px 5px 8px; border-radius:10px;}
+
+.category_items a{text-decoration: none !important; color:black;}
+
+
+.caregory_items:hover{background-color:#f1f1f1; text-decoration:none !important; transition: all 0.5s;}
+
+.caregory_items:last-child{margin-bottom: 0;}
+
+.nav_items_category:hover .categories{opacity: 1; transition: all 0.4s; display: block;}
+
+#user_profil{ width: 100%; height:800px; background-color:white; }

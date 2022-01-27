@@ -1,0 +1,84 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container pt-4 pb-4">
+    <div class="card-header" style="border-top-left-radius:20px; border-top-right-radius:20px;">
+        <div class="card-title">
+            <h3>{{request.user.first_name}}</h3>
+            <h5>{{request.user.email}}</h5>
+            <h6>{{request.user.username}}</h6>
+        </div>
+    </div>
+    <div class="pt-3 pb-2">
+        <a href="" class="d-block text-center">
+             <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+        </a>
+        <a style="float:right; margin-right:20px; margin-top:-30px;">
+            Total sum: <font class="text-success">{{sum_all}} So'm</font>
+        </a>
+    </div>
+    <div>
+        <table class="table table-hover " style="border-bottom-left-radius:20px;">
+              <thead>
+                <tr>
+                  <th><small>id</small></th>
+                  <th><small>nomi</small></th>
+                  <th><small>rasmi</small></th>
+                  <th><small>naxi</small></th>
+                    <th><small>chegirma</small></th>
+                    <th><small>soni</small></th>
+                    <th><small>total</small></th>
+                  <th><small>del</small></th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for cart_items in cart_item %}
+                <tr class="selected">
+                  <th>{{cart_items.product.id}}</th>
+                  <td>{{cart_items.product.name}}</td>
+                  <td>
+                      <img src="{{cart_items.product.poster.url}}" alt="" style="width:50px;">
+                  </td>
+                  <td>{{cart_items.product.price}}</td>
+                    <td>-{{cart_items.product.discut}}%</td>
+                    <td>{{cart_items.quantity}}</td>
+                  <td>{{cart_items.bell}}</td>
+                  <td>
+                      <a   class="text-danger trash" id="{{cart_items.product.id}}">
+                           <i class="fa fa-trash"></i>
+                      </a>
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+    </div>
+
+</div>
+{% endblock %}
+
+ <script type="text/javascript">
+     $('.trash').click(
+        function (e){
+        var trash_id = this.id
+        var trashpaernt = this
+
+
+          $.ajax({
+              url:'{% url 'account:deletecart' %}',
+              method:'POST',
+              type:'json',
+              data:{
+              tr_id:trash_id
+              },
+              success: function(data){
+              let tr_id = $(".trash").index(<trashp></trashp>aernt)
+
+              $(".selected")[tr_id].style="display:none;"
+
+              }
+              })
+
+        }
+        )
+ </script>

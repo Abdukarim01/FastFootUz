@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container pt-5 pb-5">
+    <div class="m-auto" style="max-width:450px;">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <label class="form-label">Ismingiz:</label>
+                    <input type="text" class="form-control" name="first_name" placeholder="Ismingiz">
+                </div>
+                <div class="col-12 mb-1">
+                    <label class="form-label">Username:</label>
+                    <input type="text" class="form-control" name="username" placeholder="Username">
+                    <p>
+                        {% if username_error %}
+                        Bu username <font color="red">{{exsit_username}}</font> band iltimos boshqa username kiritin
+                        {% endif %}
+                    </p>
+                </div>
+                 <div class="col-12 mb-3">
+                     <label class="form-label">E-mail:</label>
+                    <input type="email" class="form-control" name="email" placeholder="E-mail">
+                </div>
+                 <div class="col-12 mb-3">
+                     <label class="form-label ">Password:</label>
+                    <input type="password" class="form-control" name="password" placeholder="password">
+                </div>
+                <div class="col-12 mb-3 text-end">
+                    <button type="submit" class="btn btn-success">
+                        Ro'yhatdan o'tish
+                    </button>
+                </div>
+                <div class="col-12 text-center">
+                    <p>Hisobingiz bormi? <a href="{% url 'account:sign_in' %}">hisobga kirish</a> </p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+   <!-- Start Banner Hero -->
+    <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
+        <ol class="carousel-indicators">
+            {% for len in lens %}
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="{{len}}" class="active"></li>
+            {% endfor %}
+        </ol>
+        <div class="carousel-inner">
+            {% for slider in sliders|slice:"0:1" %}
+            <div class="carousel-item active">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="{{slider.poster.url}}" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left align-self-center">
+                                <h1 class="h1 text-success">{{slider.name}}</h1>
+                                <h3 class="h2">{{slider.name_plus}}</h3>
+                                <p>
+                                    {{slider.about}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% for slider in sliders|slice:"1:" %}
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="{{slider.poster.url}}" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left align-self-center">
+                                <h1 class="h1 text-success">{{slider.name}}</h1>
+                                <h3 class="h2">{{slider.name_plus}}</h3>
+                                <p>
+                                   {{slider.about}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+        <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
+            <i class="fas fa-chevron-right"></i>
+        </a>
+    </div>
+    <!-- End Banner Hero -->
+
+
+    <!-- Start Categories of The Month -->
+    <section class="container py-5">
+        <div class="row text-center pt-3">
+            <div class="col-lg-6 m-auto">
+                <h1 class="h1">Categories of The Month</h1>
+                <p>
+                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            {% for category in categories|slice:"7" %}
+            <div class="col-10 col-md-6 col-lg-4 col-xl-3 p-5 mt-3 m-auto ">
+                <a href="{% url 'product:category' category.slug category.id  %}"><img src="{{category.poster.url}}" class="rounded-circle img-fluid border"></a>
+                <h5 class="text-center mt-3 mb-3">{{category.name}}</h5>
+                <p class="text-center"><a href="{% url 'product:category' category.slug category.id  %}" class="btn btn-success">Go Shop</a></p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <!-- End Categories of The Month -->
+    <!-- Start Featured Product -->
+    <section class="bg-light">
+        <div class="container py-5">
+            <div class="row text-center py-3">
+                <div class="col-lg-6 m-auto">
+                    <h1 class="h1">Featured Product</h1>
+                    <p>
+                        Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                {% for product in products|slice:"0:6"%}
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="card h-100"  style="border-radius:10px; box-shadow:0px 0px 20px -5px #c1c1c1;">
+                        <a href="{% url 'product:product_detail' product.slug product.id %}">
+                            <img src="{{product.poster.url}}" class="card-img-top" alt="{{product.name}}">
+                        </a>
+                        <div class="card-body">
+                            <ul class="list-unstyled d-flex justify-content-between">
+                                <li>
+                                    {% for c in '0'|rjust:product.star|make_list  %}
+                                    <i class="text-warning fa fa-star"></i>
+                                    {% endfor %}
+                                </li>
+                                <li class="text-success text-right">{{product.price}} so'm</li>
+                            </ul>
+                             <ul class="list-unstyled d-flex justify-content-between">
+                                <li>
+                                    <span>Chegirmasi:</span>
+                                </li>
+                                <li class="text-success text-right">{{product.discut}}%</li>
+                            </ul>
+                            <a href="shop-single.html" class="h2 text-decoration-none text-dark">{{product.name|slice:"0:18"}}</a>
+                            <p class="card-text">
+                                {{product.about|slice:"0:100"}}
+                            </p>
+                            <a href="{% url 'product:product_detail' product.slug product.id %}" class="btn w-100 btn-block btn-primary">
+                               <i class="fa fa-eye"></i> View
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- End Featured Product -->
+{% endblock %}

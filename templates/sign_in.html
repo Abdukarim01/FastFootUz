@@ -1,0 +1,33 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container pt-5 pb-5">
+    <div class="m-auto" style="max-width:450px;">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-12 mb-1">
+                    <label class="form-label">Username:</label>
+                    <input type="text" class="form-control" name="username" placeholder="Username">
+                </div>
+                 <div class="col-12 mb-3">
+                     <label class="form-label ">Password:</label>
+                    <input type="password" class="form-control" name="password" placeholder="password">
+                </div>
+                <div class="col-12 mb-3 text-end">
+                    <button type="submit" class="btn btn-success">
+                        Kirish
+                    </button>
+                </div>
+
+                {% if in_error %}
+                <div class="col-12 text-center">
+                    <p>Sizning hisobingiz topilmadi <a href="{% url 'account:sign_up' %}">Ro'yhatdan o'ting</a></p>
+                </div>
+                {% endif %}
+
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

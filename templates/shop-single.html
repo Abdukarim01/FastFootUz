@@ -1,0 +1,118 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+ <!-- Open Content -->
+
+    <section class="bg-light">
+        <div class="container pb-5" >
+            <div class="row">
+                <div class="col-lg-5 mt-5">
+                    <div class="card mb-3">
+                        <img class="card-img img-fluid" src="{{detail_product.poster.url}}" alt="Card image cap" id="product-detail">
+                    </div>
+                </div>
+                <!-- col end -->
+                <div class="col-lg-7 mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="h2">{{detail_product.name}}</h1>
+                            <p class="h3 text-success py-2">{{detail_product.price}} So'm</p>
+                            <p class="h3 text-success py-2">Chegirmasi: {{detail_product.discut}}%</p>
+                            <p class="py-2">
+                                 {% for c in '0'|rjust:detail_product.star|make_list  %}
+                                  <i class="fa fa-star text-warning"></i>
+                                 {% endfor %}
+                                <span class="list-inline-item text-dark">Rating {{detail_product.star}} | 36 Comments</span>
+                            </p>
+                            <h6>Description:</h6>
+                            <p>{{detail_product.about}}</p>
+                                <input type="hidden" name="product-title" value="Activewear">
+                            {% if request.user.is_authenticated %}
+                                {% if not request.user.is_staff %}
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <ul class="list-inline pb-3">
+                                            <li class="list-inline-item text-right">
+                                                Quantity
+                                                <input type="hidden" name="product-quanity" id="product-quanity" value="1">
+                                            </li>
+                                            <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
+                                            <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">1</span></li>
+                                            <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row pb-3">
+                                    <div class="col-12 d-grid mb-4">
+                                        <button id="addcart" type="button" class="btn btn-success btn-lg" name="submit" value="addtocard"><i class="fas fa-cart-plus"></i> Add To Cart</button>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <p class="text-center">
+                                            Enter comment
+                                        </p>
+                                        <textarea class="form-control w-100" placeholder="Entr your comment">
+
+                                        </textarea>
+                                    </div>
+                                    <div class="col-12 text-end ">
+                                        <a href="" class="btn btn-success ">
+                                            Send
+                                        </a>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            {% else %}
+                            <p class="text-center">
+                                Siz ro'yhatdan o'tmagansiz xarid qilish uchun <a href="{% url 'account:sign_up' %}">Ro'yhatdan o'ting</a>
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Close Content -->
+    <div class="modal_cart alert alert-info">
+        <div class="text-end">
+            <a href="" class="close_cart" style="cursor: pointer; float: right;">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+        <div class="alert-title text-center">
+            <h4>Svatchaga qo'shildi </h4>
+            <p>Nomi: {{detail_product.name}} </p>
+            <p>Savatchaga <a href="{% url 'account:cart' %}">o'tish</a></p>
+            <p></p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+    .modal_cart{position:absolute; width:20%; margin-left:40%; top:-200px; z-index:1; border-radius:10px; height:150px;}
+</style>
+<script>
+ $(document).ready(
+  $("#addcart").click(function (){
+  $.ajax({
+  url:'{% url 'account:addcart' %}',
+  type:'POST',
+  data:{
+  pr_id:{{ detail_product.id }},
+  pr_quant:$("#var-value").text(),
+  },
+  success:function (){
+    document.querySelector('.modal_cart').style = "top:40%; transition:all 0.4s;"
+    let text = Number(document.querySelector('.all_products').text())
+    document.querySelector('.all_products').innerHTML = text++
+  }
+  })
+
+  })
+  )
+   $(".close_cart").click(
+   document.querySelector('.modal_cart').style = "top:-200px; transition:all 0.4s;"
+   )
+    </script>
+{% endblock %}
